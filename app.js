@@ -25,7 +25,7 @@ app.get('/list', (req, res) => {
     res.send(users)
 })
 
-app.patch('update/:id', (req, res) => {
+app.patch('/update/:id', (req, res) => {
     //get the username from url
     const id = req.params.id
 
@@ -42,7 +42,7 @@ app.patch('update/:id', (req, res) => {
    res.send({success: true, msg: 'User data updated successfully'})
 })
 
-app.delete('/delete/:id ', (req, res) => {
+app.delete('/delete/:id', (req, res) => {
     const id = req.params.id
     const existUsers = getUserData()
     const filterUser = existUsers.filter( user => user.id !== id )
