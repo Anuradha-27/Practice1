@@ -2,113 +2,68 @@ const express = require('express')
 const fs = require('fs')
 const port = 6000
 const app = express()
-
-//this line is required to parse the request body
 app.use(express.json())
 
-/* Create - POST method */
 app.post('/user/add', (req, res) => {
-    //get the existing user data
     const existUsers = getUserData()
-    
-    //get the new user data from post request
     const userData = req.body
 
-    //check if the userData fields are missing
     if (userData.id == null ||userData.email == null || userData.age == null || userData.username == null || userData.password == null) {
         return res.status(401).send({error: true, msg: 'User data missing'})
     }
-    
-    //check if the username exist already
     const findExist = existUsers.find( user => user.id === userData.id )
     if (findExist) {
-        return res.status(409).send({error: true, msg: 'username already exist'})
+        return res.status(409).send({error: true, msg: 'id  already exist'})
     }
-
-    //append the user data
     existUsers.push(userData)
-
-    //save the new user data
     saveUserData(existUsers);
     res.send({success: true, msg: 'User data added successfully'})
-
 })
 
-/* Read - GET method */
 app.get('/list', (req, res) => {
     const users = getUserData()
     res.send(users)
 })
 
-/* Update - Patch method */
 app.patch('update/:id', (req, res) => {
     //get the username from url
     const id = req.params.id
 
     //get the update data
     const userData = req.body
-
-    //get the existing user data
     const existUsers = getUserData()
-
-    //check if the username exist or not       
     const findExist = existUsers.find( user => user.id === id )
     if (!findExist) {
-        return res.status(409).send({error: true, msg: 'username not exist'})
+        return res.status(409).send({error: true, msg: 'id not exist'})
     }
-
-    //filter the userdata
-    const updateUser = existUsers.filter( user => user.id !== id )
-
-    //push the updated data
-    updateUser.push(userData)
-
-    //finally save it
-    saveUserData(updateUser)
-
-    res.send({success: true, msg: 'User data updated successfully'})
+   const updateUser = existUsers.filter( user => user.id !== id )
+   updateUser.push(userData)
+   saveUserData(updateUser)
+   res.send({success: true, msg: 'User data updated successfully'})
 })
 
-/* Delete - Delete method */
-app.delete('/delete/:username', (req, res) => {
+app.delete('/delete/:id ', (req, res) => {
     const id = req.params.id
-
-    //get the existing userdata
     const existUsers = getUserData()
-
-    //filter the userdata to remove it
     const filterUser = existUsers.filter( user => user.id !== id )
-
     if ( existUsers.length === filterUser.length ) {
-        return res.status(409).send({error: true, msg: 'username does not exist'})
+        return res.status(409).send({error: true, msg: 'id does not exist'})
     }
-
-    //save the filtered data
     saveUserData(filterUser)
-
     res.send({success: true, msg: 'User removed successfully'})
     
 })
 
-
-/* util functions */
-
-//read the user data from json file
 const saveUserData = (data) => {
     const stringifyData = JSON.stringify(data)
     fs.writeFileSync('data.json', stringifyData)
 }
 
-//get the user data from json file
 const getUserData = () => {
     const jsonData = fs.readFileSync('data.json')
     return JSON.parse(jsonData)    
 }
 
-/* util functions ends */
-
-
-//configure the server port
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
   })
