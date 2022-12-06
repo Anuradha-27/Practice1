@@ -4,7 +4,7 @@ const port = 6000
 const app = express()
 app.use(express.json())
 
-app.post('/user/add', (req, res) => {
+app.post('/add', (req, res) => {
     const existUsers = getUserData()
     const userData = req.body
 
