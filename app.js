@@ -15,12 +15,12 @@ app.post('/user/add', (req, res) => {
     const userData = req.body
 
     //check if the userData fields are missing
-    if (userData.email == null || userData.age == null || userData.username == null || userData.password == null) {
+    if (userData.id == null ||userData.email == null || userData.age == null || userData.username == null || userData.password == null) {
         return res.status(401).send({error: true, msg: 'User data missing'})
     }
     
     //check if the username exist already
-    const findExist = existUsers.find( user => user.username === userData.username )
+    const findExist = existUsers.find( user => user.id === userData.id )
     if (findExist) {
         return res.status(409).send({error: true, msg: 'username already exist'})
     }
@@ -41,9 +41,9 @@ app.get('/list', (req, res) => {
 })
 
 /* Update - Patch method */
-app.patch('update/:username', (req, res) => {
+app.patch('update/:id', (req, res) => {
     //get the username from url
-    const username = req.params.username
+    const id = req.params.id
 
     //get the update data
     const userData = req.body
@@ -52,13 +52,13 @@ app.patch('update/:username', (req, res) => {
     const existUsers = getUserData()
 
     //check if the username exist or not       
-    const findExist = existUsers.find( user => user.username === username )
+    const findExist = existUsers.find( user => user.id === id )
     if (!findExist) {
         return res.status(409).send({error: true, msg: 'username not exist'})
     }
 
     //filter the userdata
-    const updateUser = existUsers.filter( user => user.username !== username )
+    const updateUser = existUsers.filter( user => user.id !== id )
 
     //push the updated data
     updateUser.push(userData)
@@ -71,13 +71,13 @@ app.patch('update/:username', (req, res) => {
 
 /* Delete - Delete method */
 app.delete('/delete/:username', (req, res) => {
-    const username = req.params.username
+    const id = req.params.id
 
     //get the existing userdata
     const existUsers = getUserData()
 
     //filter the userdata to remove it
-    const filterUser = existUsers.filter( user => user.username !== username )
+    const filterUser = existUsers.filter( user => user.id !== id )
 
     if ( existUsers.length === filterUser.length ) {
         return res.status(409).send({error: true, msg: 'username does not exist'})
@@ -96,12 +96,12 @@ app.delete('/delete/:username', (req, res) => {
 //read the user data from json file
 const saveUserData = (data) => {
     const stringifyData = JSON.stringify(data)
-    fs.writeFileSync('users.json', stringifyData)
+    fs.writeFileSync('data.json', stringifyData)
 }
 
 //get the user data from json file
 const getUserData = () => {
-    const jsonData = fs.readFileSync('users.json')
+    const jsonData = fs.readFileSync('data.json')
     return JSON.parse(jsonData)    
 }
 
