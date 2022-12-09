@@ -31,11 +31,11 @@ app.post('/users', (req, res) => {
          ...req.body,
         "id":uuidv4()
     }
-    console.log(userData)
+
    if (userData.email == null || userData.age == null || userData.username == null || userData.password == null||userData.id == null) {
         return res.status(401).send({error: true, msg: 'User data missing'})
     } 
-    const findExist = existUsers.find( user => user.id === userData.id )
+    const findExist = existUsers.find( user => user.id === userData.id || user.email === userData.email)
     if (findExist) {
         return res.status(409).send({error: true, msg: 'id  already exist'})
     }
@@ -43,7 +43,7 @@ app.post('/users', (req, res) => {
      //append the user data
     existUsers.push(userData)
     saveUserData(existUsers);
-    res.send({success: true, msg: 'User data added successfully',id})
+    res.send({ msg: 'User data added successfully',id})
 })
 
 
