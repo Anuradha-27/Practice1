@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- <link rel="stylesheet" href="style.css">-->
+    <title> Movie Information </title>
+    <script src="../JS/service.js"></script>
+</head>
+<body>
+    <table border="1px" align="center">
+      <thead>
+          <tr>
+            <th>Id</th>
+            <th>Movie Name</th>
+            <th>Producer</th>
+            <th>Type</th>
+            <th>Rating</th>
+            <th>Edit</th>
+            <th id="delete">Delete</th>
+          </tr>
+    </thead>
+    <tbody id = "tableData">
+          
+        </tbody>    
+            
+             </table> <br> 
+             <div align="left" >
+                <label >Movie Name</label><br>
+        
+                    <input type="text"  id="mname" placeholder="name"><br>
+                <label>Producer</label><br>
+                    <input type="text" id="producer" placeholder="producer" ><br>
+                <label>Type</label><br>
+                    <input type="text"  id="type" name="type" placeholder="type"><br>
+                <label>Rating</label><br>
+                    <input type="number"  id="rating" placeholder="rating" ><br>
+                <!-- <button id="btnSubmit" onclick="addData()"> Submit</button> -->
+                <button type="submit" onclick="movieData()" value="submit" name="submit">submit</button>
+                <button type="display" onclick="getData()" value="display" name="display">display</button>
+
+            </div>
+   
+    
+</body>
+</html>
