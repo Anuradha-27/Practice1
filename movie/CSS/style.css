@@ -1,6 +1,27 @@
-table, tr {
+.movies {
+    margin-left: 40px;
     border: 1px solid black;
-}
-tr{
+    width: 18%;
     padding: 10px;
+    height: auto;
+    margin-bottom: 2px;
+    background-color: darkmagenta;
+    border-radius: 12px;
+}
+button:hover{
+    background-color: green;
+}
+button{
+    margin-top: 10px;
+    margin-left: 5px;
+    height: 30px;
+    border:1px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+input{
+    height: 20px;
+    background-color:whitesmoke ;
+}
+table{
 }
