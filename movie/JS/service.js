@@ -1,17 +1,15 @@
-const { json } = require("express");
+const { json, response } = require('express');
 
-function movieData() {
-
-    //console.log("sdjhfgsfsjhvjh")
-    let mname = document.getElementById('mname').value;
+function addData() {
+   let mname = document.getElementById('mname').value;
     let producer = document.getElementById('producer').value;
-    let type= document.getElementById('type').value;
+    let year= document.getElementById('year').value;
     let rating = document.getElementById('rating').value;
    
     let movieObj = {
                "movieName":mname,
                "producer":producer,
-               "type":type,
+               "year":year,
                "rating":rating
            }
    
@@ -26,14 +24,16 @@ function movieData() {
        } else {
            console.log("data not send")
        }
+    
    }
+  
    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
    xhr.send(JSON.stringify(movieObj));  
   
     
 }
 
-function getData() {
+function getMovieData() {
    
     let table = document.getElementById("tableData");
     const xhr = new XMLHttpRequest();
@@ -48,7 +48,7 @@ function getData() {
             id: arrayOfMovie[i].id,
             mname: arrayOfMovie[i].mname,
             producer: arrayOfMovie[i].producer,
-            type: arrayOfMovie[i].type,
+            year: arrayOfMovie[i].year,
             rating: arrayOfMovie[i].rating 
           };
           table.innerHTML +=`
@@ -56,30 +56,59 @@ function getData() {
               <td id='td'>${objectOfMovie.id}</td>
               <td id='td'>${objectOfMovie.mname}</td>
               <td id='td'>${objectOfMovie.producer}</td>
-              <td id='td'>${objectOfMovie.type}</td>
+              <td id='td'>${objectOfMovie.year}</td>
               <td id='td'>${objectOfMovie.rating}</td>
-              <td><button id="edit" onclick='edit("${objectOfMovie.mname}","${objectOfMovie.producer}","${objectOfMovie.type}","${objectOfMovie.rating}";);updateData("${objectOfMovie.id}")'>Edit</button></td>&nbsp
-              <td><button id="delete" onclick='deleteData("${objectOfMovie.id}")'>Delete</button></td>&nbsp
+              <td><button id="edit" onclick='edit("${objectOfMovie.id}","${objectOfMovie.mname}","${objectOfMovie.producer}",${objectOfMovie.year}",${objectOfMovie.rating}")'>Edit</button></td>&nbsp
+              <td><button id="delete" onclick='deleteData("${objectOfMovie.id}")'>Delete</button></td>
+
           </tr>`
            
         }
       } else {
         console.log("Problem Occur");
       }
+      
     };
     xhr.send();
   }
-  function deleteData() {
+
+  function deleteData(movieId) {
+   //  console.log(studentId);
+    //let id = document.getElementById("search").value
     const xhr = new XMLHttpRequest();
-    xhr.open("DELETE", "http://localhost:5000/movies/id", true);
-    xhr.responseType = "json";
-    let index,table = document.getElementById("tableData");
-    for (let i=0; i<table.rows.length;i++) {
-        table.rows[i].cells[3].onclick=function() {
-            index = this.parentElement.rowIndex;
-            table.deleteRow(index);
-            console.log(index);
-        }
-        
+    xhr.open("DELETE", `http://localhost:5000/movies/${movieId}`, true);
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        console.log(xhr.response);
+        console.log("record delete");
+      } else {
+        console.log("Problem Occur");
+      }
+      
+    };
+    if (window.confirm("Do you want to delete this user data?")) {
+      alert("record deleted successfully");
+      xhr.send();
+    } else {
+      return;
     }
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
