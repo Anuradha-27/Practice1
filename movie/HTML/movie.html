@@ -8,7 +8,7 @@
     <script src="../JS/service.js"></script>
 </head>
 <body>
-    <table border="1px" align="center">
+    <table border="1px" style="width:50%" >
       <thead>
           <tr>
             <th>Id</th>
@@ -16,30 +16,37 @@
             <th>Producer</th>
             <th>Type</th>
             <th>Rating</th>
-            <th>Action</th>
-           
-          </tr>
+            <th colspan = "2">Action</th>
+        </tr>
+        <tr>
+          <button type="display" onclick="getMovieData()" class="display" name="display">Display</button>
+        </tr>&nbsp
+        <tr>
+        <input type="text" name="search" placeholder="Search..">
+      </tr>
     </thead>
       <tbody id = "tableData">
-          
-     </tbody>    
-            
-    </table> <br> 
+    </tbody>    
+ </table> <br> 
+
              <div class = "movies" align="left"  >
-                <label  >Movie Name</label><br>
-        
-                    <input type="text"  id="mname" required><br>
-                <label>Producer</label><br>
-                    <input type="text"  id="producer"  required ><br>
-                <label >Year</label><br>
-                    <input type="number"  id="year" name="year"  required><br>
-                <label>Rating</label><br>
-                    <input type="number"  id="rating"  required><br>
+               
+                <input type="hidden"  id="movieId" value=""><br>
+               <!-- <label  >Movie Name</label><br> -->
+                     <input type="text"  id="mName" placeholder="Movie Name"><br><br>
+               <!-- <label>Producer</label><br>-->
+                    <input type="text"  id="producer"  placeholder="producer"><br><br>
+               <!-- <label >Year</label><br>-->
+                    <input type="number"  id="year" name="year"   placeholder="year"><br><br>
+               <!--<label>Rating</label><br>--> 
+                    <input type="number"  id="rating"  placeholder="rating"><br><br>
                 <!-- <button id="btnSubmit" onclick="addData()"> Submit</button> -->
-                <button type="submit" onclick="addData()" class="submit" name="submit">Submit</button>
-                <button type="display" onclick="getMovieData()" class="display" name="display">Display</button> 
+                <button type="button" id="submit" name="submit" onclick="addData();">Submit</button>
+                
+              
              </div>
              
+      
    
     </body>
 </html>
