@@ -19,7 +19,7 @@
             <th colspan = "2">Action</th>
         </tr>
         <tr>
-          <button type="display" onclick="getMovieData()" class="display" name="display">Display</button>
+          <button type="display" onclick="getMovieData()" id="display" name="display">Display</button>
         </tr>&nbsp
         <tr>
         <input type="text" name="search" placeholder="Search..">
@@ -28,9 +28,9 @@
       <tbody id = "tableData">
     </tbody>    
  </table> <br> 
-
-             <div class = "movies" align="left"  >
-               
+        
+             <form id="myForm">
+               <div class="movies">
                 <input type="hidden"  id="movieId" value=""><br>
                <!-- <label  >Movie Name</label><br> -->
                      <input type="text"  id="mName" placeholder="Movie Name"><br><br>
@@ -41,12 +41,20 @@
                <!--<label>Rating</label><br>--> 
                     <input type="number"  id="rating"  placeholder="rating"><br><br>
                 <!-- <button id="btnSubmit" onclick="addData()"> Submit</button> -->
-                <button type="button" id="submit" name="submit" onclick="addData();">Submit</button>
-                
-              
-             </div>
-             
-      
+             <button type="button" id="submit" name="submit" onclick="addData();">Submit</button>
+             <button type="button" onclick="myFunction()" value="Reset form">Reset</button>
+            </div>
+      </form>    
+        
+    
+             </form>
+        <script>
+          function myFunction() {
+            document.getElementById("myForm").reset();
+          }
+        </script>     
+   
+        
    
     </body>
 </html>
